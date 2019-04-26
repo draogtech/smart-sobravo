@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style="text-align:center">Regions</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding>
+      <ion-item button *ngFor="let region of regions ">
+        {{ region }}   
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+  
+
+</ion-content>
