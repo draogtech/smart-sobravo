@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { DataService } from '../data.service';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-regions',
@@ -10,16 +10,38 @@ import { DataService } from '../data.service';
 })
 export class RegionsPage implements OnInit {
 
-  constructor(private dataService: DataService) {
+  regions;
+  constructor(public toastCtrl: ToastController, private dataService: DataService, public router: Router) {
   }
 
-  regions;
+  async successToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'Your point have been saved.',
+      duration: 2000
+    });
+    toast.present();
+  }
 
+  async failureToast() {
+    const toast = await this.toastCtrl.create({
+      message: 'A server error has occurred.',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  // Sending region filter parameters
+  clickRegion(region){
+    console.log('region clicked');
+    this.router.navigate(['/villes', region]);
+  }
 
   ngOnInit() {
-    this.regions = this.dataService.getRegions();
-    // this.regions.subscribe(res => {
-    //   console.log(res);
-    // });
+      // Call our service function which returns an Observable
+      this.dataService.setRegions().subscribe(res => {
+        this.regions = res.json();
+      }, err => {
+        this.failureToast();
+      });
   }
 }

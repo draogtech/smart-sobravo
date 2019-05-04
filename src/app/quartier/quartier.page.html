@@ -1,9 +1,18 @@
 <ion-header>
+    
   <ion-toolbar>
-    <ion-title>quartier</ion-title>
+      <ion-buttons slot="start">
+          <ion-back-button color="secondary" defaultHref="communues/"></ion-back-button>
+      </ion-buttons>
+    <ion-title>Quartier</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+        <ion-list>
+          <ion-item-sliding>
+            <ion-item button  *ngFor="let quartier of quartiers; let i = index; let even = even" (click)="getQuartierID(quartier.id)" style="font-size: 15px" [color]="even? '' : 'secondary'" detail>
+              {{ quartier.name }}   
+            </ion-item>
+          </ion-item-sliding>
+        </ion-list>
 </ion-content>

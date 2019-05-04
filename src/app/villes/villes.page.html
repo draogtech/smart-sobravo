@@ -1,9 +1,18 @@
 <ion-header>
+    
   <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button color="secondary" defaultHref="regions"></ion-back-button>
+      </ion-buttons>
     <ion-title>villes</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+        <ion-list>
+          <ion-item-sliding>
+            <ion-item button (click)="clickVille(ville)" *ngFor="let ville of villes; let even = even" style="font-size: 15px" [color]="even? '' : 'secondary'" detail>
+              {{ ville }}   
+            </ion-item>
+          </ion-item-sliding>
+        </ion-list>
 </ion-content>

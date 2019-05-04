@@ -1,9 +1,51 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>PDVDetails</ion-title>
-  </ion-toolbar>
+    
+    <ion-toolbar class="new-background-color">
+        <ion-buttons slot="start">
+            <ion-back-button color="secondary" defaultHref="list-pdv/"></ion-back-button>
+        </ion-buttons>
+      <ion-title style="text-align:center; color: #ffffff">Details PDV</ion-title>
+    </ion-toolbar>
 </ion-header>
-
 <ion-content>
+    <ion-list style="padding: 20px; margin-top: 30px; font-size: 14px" *ngIf="pdvDetails">
+        <ion-item style="font-size: 14px">
+          
+            Nom PDV: {{ pdvDetails.nom_point_vente }}
+          
+        </ion-item>
+        <ion-item style="font-size: 14px">
+           
+            TEL: {{ pdvDetails.telephone1 }}
+            
+        </ion-item>
+        <ion-item style="font-size: 14px">
+           
+                addresse: {{ pdvDetails.addresse }}
+          
+        </ion-item>
+        <ion-item style="font-size: 14px">
 
+                Latitude: {{ pdvDetails.lat }} , Longitude: {{ pdvDetails.lng }}
+    
+        </ion-item>
+        <ion-row style="margin-top: 20px">
+            <ion-col>
+                <ion-button (click)="getGeolocation()" size="small" style="text-transform:inherit" color="light">localiser</ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button (click)="getPhoto()" size="small" style="text-transform:inherit" color="dark">photo</ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-row style="margin-top: 20px">
+            <ion-col>
+                <ion-checkbox (click)="branding()" color="secondary"></ion-checkbox><span>Brander</span>
+            </ion-col>
+            <ion-col>
+                <ion-checkbox (click)="pdvStatus()" color="secondary"></ion-checkbox><span>Ouvert</span>
+            </ion-col>
+        </ion-row>
+    </ion-list>
 </ion-content>
+
+  

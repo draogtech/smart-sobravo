@@ -7,7 +7,7 @@
 <ion-content>
   <ion-list>
     <ion-item-sliding>
-      <ion-item button *ngFor="let region of regions ">
+      <ion-item button (click)="clickRegion(region)" *ngFor="let region of regions; let even = even" style="font-size: 15px" [color]="even? '' : 'secondary'" detail>
         {{ region }}   
       </ion-item>
     </ion-item-sliding>

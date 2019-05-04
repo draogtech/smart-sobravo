@@ -5,11 +5,12 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'regions', loadChildren: './regions/regions.module#RegionsPageModule' },
-  { path: 'villes', loadChildren: './villes/villes.module#VillesPageModule' },
-  { path: 'communues', loadChildren: './communues/communues.module#CommunuesPageModule' },
-  { path: 'quartier', loadChildren: './quartier/quartier.module#QuartierPageModule' },
-  { path: 'list-pdv', loadChildren: './list-pdv/list-pdv.module#ListPDVPageModule' },
-  { path: 'pdvdetails', loadChildren: './pdvdetails/pdvdetails.module#PDVDetailsPageModule' },
+  { path: 'villes/:region', loadChildren: './villes/villes.module#VillesPageModule' },
+  { path: 'communues/:ville', loadChildren: './communues/communues.module#CommunuesPageModule' },
+  { path: 'quartiers/:id', loadChildren: './quartier/quartier.module#QuartierPageModule' },
+  { path: 'list-pdv/:id', loadChildren: './list-pdv/list-pdv.module#ListPDVPageModule' },
+  { path: 'pdvdetails/:id', loadChildren: './pdvdetails/pdvdetails.module#PDVDetailsPageModule' },
+  { path: 'add-pdv', loadChildren: './add-pdv/add-pdv.module#AddPDVPageModule' },
 ];
 
 @NgModule({

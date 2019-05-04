@@ -1,0 +1,31 @@
+<ion-header>
+    
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button color="secondary" defaultHref="quartiers/"></ion-back-button>
+        </ion-buttons>
+      <ion-title>Ajouter Point</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+    <form  #addPointform="ngForm" (ngSubmit)="addPoint(addPointform.value)">
+      <ion-item>
+          <ion-label style="font-size: 15px" position="floating">Nom Gerant</ion-label>
+          <ion-input  name="nom_gerant" type="text" [(ngModel)] = "nom_gerant" required></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label style="font-size: 15px" position="floating">Nom Point Vente</ion-label>
+          <ion-input  name="nom_point_vente" type="text" [(ngModel)] = "nom_point_vente" required></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label style="font-size: 15px" position="floating">Telephone 1</ion-label>
+          <ion-input  name="telephone1" type="text" [(ngModel)] = "telephone1" required></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label style="font-size: 15px" position="floating">Phone Client</ion-label>
+          <ion-input  name="phone_client" type="text" [(ngModel)] = "phone_client" required></ion-input>
+      </ion-item>
+      <ion-button type="submit" expand="block" color="dark"  style="text-transform:inherit">Submit</ion-button>
+    </form>
+</ion-content>

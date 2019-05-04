@@ -1,9 +1,47 @@
 <ion-header>
+    
   <ion-toolbar>
-    <ion-title>listPDV</ion-title>
+      <ion-buttons slot="start">
+          <ion-back-button color="secondary" defaultHref="quartiers/"></ion-back-button>
+      </ion-buttons>
+    <ion-title>list pdv</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+        <ion-list>
+                <ion-item button (click) = "getPDVID(key.id)" *ngFor="let key of listPDV; let even = even" style="font-size: 15px" [color]="even? '' : 'secondary'" detail>
+                    <ion-grid>
+                        <ion-row>
+                          <ion-col size-sm>
+                            <p style="font-size: 14px">PDV {{ key.id }}</p>
+                          </ion-col>
+                          <ion-col>
+                            <p style="font-size: 14px">{{ key.nom_point_vente }}</p>
+                          </ion-col>
+                          <ion-col>
+                            <p style="font-size: 14px">{{ key.addresse }}</p>
+                          </ion-col>
+                        </ion-row>
+                    </ion-grid>        
+                        
+                    <!-- <button color="secondary" (click) = "getPDVID(key.id)" ion-button clear item-end>View</button> -->
+                </ion-item>
+                
+        </ion-list>
 
+        <!-- <ion-fab color="dark" vertical="bottom" horizontal="end" edge slot="fixed">
+                <ion-fab-button color='dark' side='end' (click)="gotoAddPointPage()" routerDirection="forward">
+                  <ion-icon name="add"></ion-icon>
+                </ion-fab-button>
+        </ion-fab> -->
 </ion-content>
+<ion-footer>
+    <!-- <ion-fab color="dark" vertical="bottom" horizontal="end" edge slot="fixed">
+            <ion-fab-button color='dark' side='end' (click)="gotoAddPointPage()" routerDirection="forward">
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+    </ion-fab> -->
+    <ion-toolbar>
+        <ion-button expand="block" color="dark" (click)="gotoAddPointPage()" routerDirection="forward" style="text-transform:inherit">Ajouter</ion-button>
+    </ion-toolbar>
+</ion-footer>
