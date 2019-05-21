@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
+// import { Subscription } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-regions',
@@ -11,7 +13,19 @@ import { ToastController } from '@ionic/angular';
 export class RegionsPage implements OnInit {
 
   regions;
-  constructor(public toastCtrl: ToastController, private dataService: DataService, public router: Router) {
+  subscription: import('/home/draogtech/Smart-GN/client-app/node_modules/rxjs/internal/Subscription').Subscription;
+  // tslint:disable-next-line:max-line-length
+  constructor(private platform: Platform, public toastCtrl: ToastController, private dataService: DataService, public router: Router) {
+  }
+
+  ionViewDidEnter() {
+      this.subscription = this.platform.backButton.subscribe(() => {
+          navigator['app'].exitApp();
+      });
+  }
+
+  ionViewWillLeave() {
+      this.subscription.unsubscribe();
   }
 
   async successToast() {
@@ -24,14 +38,14 @@ export class RegionsPage implements OnInit {
 
   async failureToast() {
     const toast = await this.toastCtrl.create({
-      message: 'A server error has occurred.',
+      message: 'A server connection error has occurred. Please check your internet connection',
       duration: 2000
     });
     toast.present();
   }
 
   // Sending region filter parameters
-  clickRegion(region){
+  clickRegion(region) {
     console.log('region clicked');
     this.router.navigate(['/villes', region]);
   }

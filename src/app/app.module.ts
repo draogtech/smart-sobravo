@@ -24,16 +24,24 @@ import { HTTP } from '@ionic-native/http/ngx';
 
 import { IonicStorageModule } from '@ionic/storage';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { File } from '@ionic-native/file/ngx';
+
+
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   // tslint:disable-next-line:max-line-length
-  imports: [HttpModule, HttpClientModule, MatFormFieldModule, BrowserAnimationsModule, MatButtonModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot()],
+  imports: [FormsModule, ReactiveFormsModule, HttpModule, HttpClientModule, MatFormFieldModule,
+     BrowserAnimationsModule, MatButtonModule, BrowserModule,
+      IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot()],
   providers: [
     Camera,
     HTTP,
+    File,
     FileTransfer,
     StatusBar,
     SplashScreen,

@@ -17,7 +17,6 @@ export class LoadingControlService {
       message: msg
     }).then((res) => {
       res.present();
- 
       res.onDidDismiss().then((dis) => {
         console.log('Loading dismissed!');
       });
@@ -28,6 +27,6 @@ export class LoadingControlService {
   hideLoader() {
     setTimeout(() => {
       this.loadingController.dismiss();
-    }, 4000);
+    }, 1000);
   }
 }

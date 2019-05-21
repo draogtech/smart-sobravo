@@ -3,12 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Http, Headers, RequestMethod, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { DataService } from '../data.service';
 import { ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { LoadingControlService } from '../loading-control.service';
+import { File, FileEntry } from '@ionic-native/file/ngx';
 
 @Component({
   selector: 'app-pdvdetails',
@@ -17,7 +18,7 @@ import { LoadingControlService } from '../loading-control.service';
 })
 export class PDVDetailsPage implements OnInit {
   // tslint:disable-next-line:max-line-length
-  constructor(public  loadingSerice: LoadingControlService, private storage: Storage, public toastCtrl: ToastController, private geolocation: Geolocation, public dataService: DataService, private http: Http, public activeRoute: ActivatedRoute, public router: Router, public camera: Camera, private transfer: FileTransfer,) { }
+  constructor(private file: File, public  loadingSerice: LoadingControlService, private storage: Storage, public toastCtrl: ToastController, private geolocation: Geolocation, public dataService: DataService, private http: Http, public activeRoute: ActivatedRoute, public router: Router, public camera: Camera, private transfer: FileTransfer) { }
 
   quartierID;
   pdvList;
@@ -29,11 +30,10 @@ export class PDVDetailsPage implements OnInit {
   imgData;
 
 
-
   async presentToast(msg) {
     const toast = await this.toastCtrl.create({
       message: msg,
-      duration: 8000
+      duration: 6000
     });
     toast.present();
   }
@@ -48,8 +48,8 @@ export class PDVDetailsPage implements OnInit {
       const key = 'number';
       this.storage.get(key).then((val) => {
         console.log('your numero is:', val);
-        this.loadingSerice.showLoader('Updating GPS Location');
         // Updating GPS Location
+        this.loadingSerice.showLoader('Updating GPS Location');
         const gpsURL = 'https://sobravo.ga/index.php/api/point/update_coord';
         // tslint:disable-next-line:max-line-length
         this.http.get(encodeURI(gpsURL + '/' + this.pdvID + '/' + val + '/' + resp.coords.latitude + '/' + resp.coords.longitude)).subscribe(res => {
@@ -69,39 +69,63 @@ export class PDVDetailsPage implements OnInit {
      });
   }
 
+b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, {type: contentType});
+    return blob;
+}
 
   // Upload Photo
   getPhoto() {
      const options = {
-         quality: 100
+          quality: 50,
+          destinationType: this.camera.DestinationType.FILE_URI,
+          encodingType: this.camera.EncodingType.JPEG,
+          mediaType: this.camera.MediaType.PICTURE,
+          sourceType: this.camera.PictureSourceType.CAMERA,
+          correctOrientation: true,
+          saveToPhotoAlbum: true
       };
 
      this.camera.getPicture(options).then((imageData) => {
-            // imageData is either a base64 encoded string or a file URI
-            // If it's base64:
-
-            // const fileTransfer: FileTransferObject = this.transfer.create();
-
-            // const options1: FileUploadOptions = {
-            //       fileKey: 'file',
-            //       fileName: 'name.jpg',
-            //       headers: {}
-            // };
+         
+            console.log(imageData);
+            const contentType = 'image/jpeg';
+            const blob = this.b64toBlob(imageData, contentType, 512);
+            console.log(blob);
 
             const key = 'number';
             this.storage.get(key).then((val) => {
             console.log('your numero is:', val);
 
             // Uploading image
+            this.loadingSerice.showLoader('Uploading photo');
             const uploadDetails = new FormData();
-            uploadDetails.append('pdvFile', imageData);
+            uploadDetails.append('pdvFile', blob, 'image.png');
             uploadDetails.append('updated_by', val);
             uploadDetails.append('pdv_id', this.pdvID);
-            this.loadingSerice.showLoader('Uploading photo');
             const uploadURL = 'https://sobravo.ga/index.php/api/point/upload_file';
             this.http.post(uploadURL, uploadDetails).subscribe(res => {
-                this.presentToast('Image upload successful');
-                console.log(res);
+              this.presentToast('Image upload successful');
+              console.log(res);
             }, err => {
                 this.presentToast('Image upload unsuccessful');
                 console.log(err);
@@ -146,7 +170,7 @@ export class PDVDetailsPage implements OnInit {
         const brandURL = 'https://sobravo.ga/index.php/api/point/change_status';
         // tslint:disable-next-line:max-line-length
         this.http.put(encodeURI(brandURL + '/' + this.pdvID + '/' + val), null).subscribe(res => {
-          this.presentToast('Brand Updated');
+          this.presentToast('PDV status Updated');
           console.log(res);
         },
         err => {

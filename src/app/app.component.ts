@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import { Key } from 'protractor';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
@@ -24,6 +25,8 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
       const key = 'number';
       this.storage.get(key).then((val) => {
         console.log('your numero is:', val);
@@ -33,8 +36,6 @@ export class AppComponent {
           this.router.navigateByUrl('/');
         }
       });
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
     });
   }
 }

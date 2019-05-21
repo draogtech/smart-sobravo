@@ -9,23 +9,37 @@
   </ion-header>
 
 <ion-content>
-    <form  #addPointform="ngForm" (ngSubmit)="addPoint(addPointform.value)">
+    <form  [formGroup]="addPointForm" (ngSubmit)="addPoint()">
       <ion-item>
-          <ion-label style="font-size: 15px" position="floating">Nom Gerant</ion-label>
-          <ion-input  name="nom_gerant" type="text" [(ngModel)] = "nom_gerant" required></ion-input>
+          <ion-label style="font-size: 15px" position="floating">Nom Gerant*</ion-label>
+          <ion-input  formControlName="nom_gerant" type="text" [(ngModel)] = "nom_gerant" required=True></ion-input>
+          <div *ngIf="isSubmitted && formControls.nom_gerant.errors">
+            <div *ngIf="formControls.nom_gerant.errors.required">required</div>
+          </div>
       </ion-item>
       <ion-item>
-          <ion-label style="font-size: 15px" position="floating">Nom Point Vente</ion-label>
-          <ion-input  name="nom_point_vente" type="text" [(ngModel)] = "nom_point_vente" required></ion-input>
+          <ion-label style="font-size: 15px" position="floating">Nom Point Vente*</ion-label>
+          <ion-input  formControlName="nom_point_vente" type="text" [(ngModel)] = "nom_point_vente" required></ion-input>
+          <div *ngIf="isSubmitted && formControls.nom_point_vente.errors">
+            <div *ngIf="formControls.nom_point_vente.errors.required">required</div>
+          </div>
       </ion-item>
       <ion-item>
-          <ion-label style="font-size: 15px" position="floating">Telephone 1</ion-label>
-          <ion-input  name="telephone1" type="text" [(ngModel)] = "telephone1" required></ion-input>
+          <ion-label style="font-size: 15px" position="floating">Telephone 1*</ion-label>
+          <ion-input  formControlName="telephone1" type="text" [(ngModel)] = "telephone1" required></ion-input>
+          <div *ngIf="isSubmitted && formControls.telephone1.errors">
+            <div *ngIf="formControls.telephone1.errors.required">required</div>
+            <div *ngIf="formControls.telephone1.errors.pattern">invalid</div>
+          </div>
       </ion-item>
       <ion-item>
-          <ion-label style="font-size: 15px" position="floating">Phone Client</ion-label>
-          <ion-input  name="phone_client" type="text" [(ngModel)] = "phone_client" required></ion-input>
+          <ion-label style="font-size: 15px" position="floating">Phone Client*</ion-label>
+          <ion-input  formControlName="phone_client" type="text" [(ngModel)] = "phone_client" required></ion-input>
+          <div *ngIf="isSubmitted && formControls.phone_client.errors">
+            <div *ngIf="formControls.phone_client.errors.required">required</div>
+            <div *ngIf="formControls.phone_client.errors.pattern">invalid</div>
+          </div>
       </ion-item>
-      <ion-button type="submit" expand="block" color="dark"  style="text-transform:inherit">Submit</ion-button>
+      <ion-button type="submit" expand="block" color="dark" [disabled]="!addPointForm" style="text-transform:inherit">Submit</ion-button>
     </form>
 </ion-content>
