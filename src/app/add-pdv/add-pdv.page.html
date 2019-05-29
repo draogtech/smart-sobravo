@@ -25,7 +25,7 @@
           </div>
       </ion-item>
       <ion-item>
-          <ion-label style="font-size: 15px" position="floating">Telephone 1*</ion-label>
+          <ion-label style="font-size: 15px" position="floating">Telephone*</ion-label>
           <ion-input  formControlName="telephone1" type="text" [(ngModel)] = "telephone1" required></ion-input>
           <div *ngIf="isSubmitted && formControls.telephone1.errors">
             <div *ngIf="formControls.telephone1.errors.required">required</div>
@@ -33,13 +33,32 @@
           </div>
       </ion-item>
       <ion-item>
-          <ion-label style="font-size: 15px" position="floating">Phone Client*</ion-label>
+          <ion-label style="font-size: 15px" position="floating">Phone Propriétaire*</ion-label>
           <ion-input  formControlName="phone_client" type="text" [(ngModel)] = "phone_client" required></ion-input>
           <div *ngIf="isSubmitted && formControls.phone_client.errors">
             <div *ngIf="formControls.phone_client.errors.required">required</div>
             <div *ngIf="formControls.phone_client.errors.pattern">invalid</div>
           </div>
       </ion-item>
+      <ion-item>
+        <ion-label style="font-size: 15px" position="floating">adresse*</ion-label>
+        <ion-input  formControlName="adresse" type="text" [(ngModel)] = "adresse" required></ion-input>
+        <div *ngIf="isSubmitted && formControls.adresse.errors">
+          <div *ngIf="formControls.adresse.errors.required">required</div>
+          <div *ngIf="formControls.adresse.errors.pattern">invalid</div>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-select placeholder="Sélectionner" [(ngModel)] = "type" formControlName="type" style="font-size: 15px" position="floating">
+          <ion-select-option value="0">BG</ion-select-option>
+          <ion-select-option value="1">Biere</ion-select-option>
+          <ion-select-option value="2">Mixe</ion-select-option>
+        </ion-select>
+        <div *ngIf="isSubmitted && formControls.type.errors">
+          <div *ngIf="formControls.type.errors.required">required</div>
+          <div *ngIf="formControls.type.errors.pattern">invalid</div>
+        </div>
+    </ion-item>
       <ion-button type="submit" expand="block" color="dark" [disabled]="!addPointForm" style="text-transform:inherit">Submit</ion-button>
     </form>
 </ion-content>

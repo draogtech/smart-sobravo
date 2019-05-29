@@ -5,8 +5,8 @@
 </ion-header>
 
 
-<h4 style="text-align:center">Numero</h4>
-<ion-card style="box-shadow: 0px; bottom: 130px">  
-    <ion-input  [(ngModel)]="inputNumber" type="tel" pattern="[0-9]*" style="-webkit-text-security:disc"></ion-input>
+<!-- <h4 style="text-align:center;margin-top: auto !important;margin-bottom: auto !important;">Numero</h4> -->
+<ion-card style="box-shadow: 0px; margin-top: auto !important;margin-bottom: auto !important;">  
+    <ion-input placeholder="tapez le numéro ici"  [(ngModel)]="inputNumber" type="tel" pattern="[0-9]*" style="-webkit-text-security:disc; text-align: center"></ion-input>
     <ion-button (click)="saveNumero()" expand="block" color="secondary" routerLink="/regions" routerDirection="forward" style="text-transform:inherit" class="black-text">Valider</ion-button>
 </ion-card>

@@ -44,6 +44,8 @@ export class AddPDVPage implements OnInit {
       body.append('phone_client', this.addPointForm.value.phone_client);
       body.append('nom_gerant', this.addPointForm.value.nom_gerant);
       body.append('nom_point_vente', this.addPointForm.value.nom_point_vente);
+      body.append('adresse', this.addPointForm.value.adresse);
+      body.append('type', this.addPointForm.value.type);
       body.append('quartier_id', this.dataService.quartierID);
 
       const addPointURL = 'https://sobravo.ga/index.php/api/point/add_new_point';
@@ -72,6 +74,8 @@ export class AddPDVPage implements OnInit {
       phone_client: ['', Validators.compose([Validators.pattern('[0-9]*'), Validators.required])],
       nom_gerant: ['', Validators.required],
       nom_point_vente: ['', Validators.required],
+      adresse: ['', Validators.required],
+      type: ['', Validators.required],
     });
   }
 

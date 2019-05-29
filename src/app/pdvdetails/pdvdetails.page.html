@@ -15,6 +15,11 @@
           
         </ion-item>
         <ion-item style="font-size: 14px">
+          
+            Gerant: {{ pdvDetails.nom_gerant }}
+          
+        </ion-item>
+        <ion-item style="font-size: 14px">
            
             TEL: {{ pdvDetails.telephone1 }}
             
@@ -38,11 +43,17 @@
             </ion-col>
         </ion-row>
         <ion-row style="margin-top: 20px">
-            <ion-col>
-                <ion-checkbox class="checkbox" type="checkbox" (click)="branding()" color="dark"></ion-checkbox><span style="margin:5px">Brander</span>
+            <ion-col *ngIf="pdvDetails.branding === 1">
+                <ion-checkbox  class="checkbox" type="checkbox" (click)="branding()" color="dark"></ion-checkbox><span style="margin:5px">Brander</span>
             </ion-col>
-            <ion-col>
+            <ion-col *ngIf="pdvDetails.etat === 1">
                 <ion-checkbox class="checkbox" type="checkbox" (click)="pdvStatus()" color="dark"></ion-checkbox><span style="margin:5px">Ouvert</span>
+            </ion-col>
+            <ion-col *ngIf="pdvDetails.branding === 0">
+                <ion-checkbox  class="checkbox" type="checkbox" (click)="branding()" color="dark" checked=true></ion-checkbox><span style="margin:5px">Brander</span>
+            </ion-col>
+            <ion-col *ngIf="pdvDetails.etat === 0">
+                <ion-checkbox class="checkbox" type="checkbox" (click)="pdvStatus()" color="dark" checked=true></ion-checkbox><span style="margin:5px">Ouvert</span>
             </ion-col>
         </ion-row>
     </ion-list>

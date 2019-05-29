@@ -10,7 +10,7 @@
 <ion-content>
         <ion-list>
           <ion-item-sliding>
-            <ion-item button  *ngFor="let communue of communues; let i = index; let even = even" (click)="getCommunueID(i+1)" style="font-size: 15px" [color]="even? '' : 'secondary'" detail>
+            <ion-item button  *ngFor="let communue of communues; let i = index; let even = even" (click)="getCommunueID(communue.id)" style="font-size: 15px" [color]="even? '' : 'secondary'" detail>
               {{ communue.name }}   
             </ion-item>
           </ion-item-sliding>

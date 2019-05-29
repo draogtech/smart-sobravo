@@ -49,6 +49,7 @@ export class CommunuesPage implements OnInit {
        console.log(this.http.get(encodeURI(communueURL + '/' + this.ville)));
        this.http.get(encodeURI(communueURL + '/' + this.ville)).subscribe(res => {
           this.communues = res.json();
+          console.log('communune string is:', JSON.stringify(this.communues))
           console.log(this.communues);
       }, err => {
         console.log(err);

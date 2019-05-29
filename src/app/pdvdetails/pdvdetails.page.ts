@@ -97,7 +97,7 @@ b64toBlob(b64Data, contentType, sliceSize) {
   getPhoto() {
      const options = {
           quality: 50,
-          destinationType: this.camera.DestinationType.FILE_URI,
+          destinationType: this.camera.DestinationType.DATA_URL,
           encodingType: this.camera.EncodingType.JPEG,
           mediaType: this.camera.MediaType.PICTURE,
           sourceType: this.camera.PictureSourceType.CAMERA,
@@ -106,11 +106,32 @@ b64toBlob(b64Data, contentType, sliceSize) {
       };
 
      this.camera.getPicture(options).then((imageData) => {
-         
+            // imageData is either a base64 encoded string or a file URI
+            // If it's base64:
+            // this.uploadPhoto(imageData);
+
+            // const fileTransfer: FileTransferObject = this.transfer.create();
+
+            // const options1: FileUploadOptions = {
+            //       fileKey: 'file',
+            //       fileName: 'name.jpg',
+            //       headers: {}
+            // };
+            // const base64Image = 'data:image/jpeg;base64,' + imageData;
             console.log(imageData);
             const contentType = 'image/jpeg';
             const blob = this.b64toBlob(imageData, contentType, 512);
             console.log(blob);
+
+            // const blob = new Blob(imageData);
+
+            console.log(blob);
+
+            // if (sourceType === this.camera.PictureSourceType.CAMERA) {
+            //   const filename = imageData.substring(imageData.lastIndexOf('/') + 1);
+            //   const path = imageData.substring(0, imageData.lastIndexOf('/') + 1);
+            //   console.log(path, 'FileName::', filename);
+            // }
 
             const key = 'number';
             this.storage.get(key).then((val) => {
@@ -133,6 +154,48 @@ b64toBlob(b64Data, contentType, sliceSize) {
             });
       });
   }
+
+  // uploadPhoto(imageFileUri) {
+  //   // this.loadingSerice.showLoader('Uploading photo');
+
+  //   // this.file.resolveLocalFilesystemUrl(imageFileUri.filePath)
+  //   // .then(entry => {
+  //   //     ( entry as FileEntry).file(file => this.readFile(file));
+  //   // })
+  //   // .catch(err => {
+  //   //     this.presentToast('Error while reading image file.');
+  //   // });
+
+  //     // window['resolveLocalFileSystemURL'](imageFileUri,
+  //     //   entry => {
+  //     //     entry['file'](file => this.readFile(file));
+  //     //   });
+  // }
+
+  // private readFile(file: any) {
+  //   const reader = new FileReader();
+  //   const key = 'number';
+  //   this.storage.get(key).then((val) => {
+  //         console.log('your numero is:', val);
+  //         reader.onloadend = () => {
+  //           const uploadDetails = new FormData();
+  //           const imgBlob = new Blob([reader.result], {type: file.type});
+  //           // Uploading image
+  //           uploadDetails.append('file', imgBlob, file.name);
+  //           uploadDetails.append('updated_by', val);
+  //           uploadDetails.append('pdv_id', this.pdvID);
+  //           const uploadURL = 'https://sobravo.ga/index.php/api/point/upload_file';
+  //           this.http.post(uploadURL, uploadDetails).subscribe(res => {
+  //                   this.presentToast('Image upload successful');
+  //                   console.log(res);
+  //                 }, err => {
+  //                     this.presentToast('Image upload unsuccessful');
+  //                     console.log(err);
+  //           });
+  //       };
+  //   });
+  //   reader.readAsArrayBuffer(file);
+  // }
 
 
   branding() {
@@ -183,6 +246,7 @@ b64toBlob(b64Data, contentType, sliceSize) {
 
 
   ngOnInit() {
+
     // Receive QuartierID parameters
     this.quartierID = this.activeRoute.snapshot.paramMap.get('id');
     console.log('received', this.quartierID);
@@ -203,6 +267,9 @@ b64toBlob(b64Data, contentType, sliceSize) {
                 this.pdvID = this.pdvDetails.id;
                 this.telephone1 = this.pdvDetails.telephone1;
                 console.log(this.pdvDetails);
+                if (this.pdvDetails.branding === 0) {
+                  const checked = true;
+                }
                 break;
             }
         }

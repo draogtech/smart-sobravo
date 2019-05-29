@@ -28,6 +28,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { File } from '@ionic-native/file/ngx';
 
+import { FilePath } from '@ionic-native/file-path/ngx';
+
+import {WebView} from '@ionic-native/ionic-webview/ngx';
+
 
 
 
@@ -40,8 +44,10 @@ import { File } from '@ionic-native/file/ngx';
       IonicModule.forRoot(), AppRoutingModule, IonicStorageModule.forRoot()],
   providers: [
     Camera,
+    WebView,
     HTTP,
     File,
+    FilePath,
     FileTransfer,
     StatusBar,
     SplashScreen,
